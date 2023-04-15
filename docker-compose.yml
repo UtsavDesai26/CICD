@@ -1,26 +1,20 @@
 version: '3.7'
 
 services:
-  server:
-    build:
-      context: ./backand
-      dockerfile: Dockerfile
+
+  node:
+    build: ./backand
     image: myapp-server
     container_name: myapp-node-serverx
-    command: /usr/src/app/node_modules/.bin/nodemon index.js
-    volumes:
-      - ./backand/:/usr/src/app
-      - /usr/src/app/node_modules
-    ports:
-      - "5000:5000"
+    restart: always
     depends_on:
-      - mongo
-    # env_file: ./backand/.env
-    # environment:
-    #   - NODE_ENV=development
+      - mongodb
+    ports:
+      - 5000:5000
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/mydb
     networks:
       - app-network
-
 
   mongo:
     image: mongo
@@ -32,20 +26,15 @@ services:
       - app-network
 
 
-  client:
-    build:
-      context: ./
-      dockerfile: Dockerfile
+  react:
+    build: .
     image: myapp-client
     container_name: myapp-react-client
-    command: npm start
-    volumes:
-      - ./:/usr/app
-      - /usr/app/node_modules
-    depends_on:
-      - server
+    restart: always
     ports:
-      - "3000:3000"
+      - 3000:3000
+    depends_on:
+      - node
     networks:
       - app-network
 
