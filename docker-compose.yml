@@ -12,12 +12,12 @@ services:
     ports:
       - 5000:5000
     environment:
-      - MONGODB_URI=mongodb://mongodb:27017/mydb
+      - MONGODB_URI=mongodb+srv://UtsavDesai:Utsav_*_26@cluster0.dasho2p.mongodb.net/?retryWrites=true&w=majority
     networks:
       - app-network
 
   mongodb:
-    image: mongodb
+    image: mongo
     volumes:
       - data-volume:/data/db
     ports:
