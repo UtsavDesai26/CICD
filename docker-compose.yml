@@ -16,8 +16,8 @@ services:
     networks:
       - app-network
 
-  mongo:
-    image: mongo
+  mongodb:
+    image: mongodb
     volumes:
       - data-volume:/data/db
     ports:
